@@ -5,6 +5,14 @@ from collections import Counter
 
 api = NewsApiClient(api_key='78b9d599c4f94f8fa3afb1a5458928d6')
 
+def remove_repeats(arr):
+	c = Counter(x.title for x in arr)
+	for indx, x in enumerate(arr):
+		while c[x.title] > 1:
+			arr.remove(x)
+			c[x.title] -= 1
+	return arr
+
 def homepage_headlines():
 	sports_headlines = api.get_top_headlines(category="sports").get("articles")
 	tech_headlines = api.get_top_headlines(category="technology").get("articles")
@@ -47,13 +55,11 @@ def homepage_headlines():
 
 	#shuffle list and sort them by date
 	shuffle(headlinesList)
+
+	#remove repeats -> first get a map of frequnecy titles, then check if they appear more than once
+	headlinesList = remove_repeats(headlinesList)
+
 	headlinesList.sort()
-	
-	#remove repeats
-	c = Counter(headline.title for headline in headlinesList)
-	for indx, headline in enumerate(headlinesList):
-		if c[headline.title] > 1:
-			headlinesList.pop(indx)
 
 	return headlinesList
 
@@ -97,15 +103,10 @@ def search_headlines(userSearch):
 			headline.get("title"), 
 			headline.get("url"), 
 			headline.get("urlToImage")))
-	#sort by date
+
 	shuffle(headlinesList)
 	headlinesList.sort()
-	
-	#remove repeats
-	c = Counter(headline.title for headline in headlinesList)
-	for indx, headline in enumerate(headlinesList):
-		if c[headline.title] > 1:
-			headlinesList.pop(indx)
+	headlinesList = remove_repeats(headlinesList)
 
 	return headlinesList
 
@@ -124,22 +125,8 @@ def category_headlines(topic):
 			headline.get("title"), 
 			headline.get("url"), 
 			headline.get("urlToImage")))
-	#sort by date
+
 	headlinesList.sort()
-	#remove repeats
-	c = Counter(headline.title for headline in headlinesList)
-	for indx, headline in enumerate(headlinesList):
-		if c[headline.title] > 1:
-			headlinesList.pop(indx)
+	headlinesList = remove_repeats(headlinesList)
 
 	return headlinesList
-
-
-
-
-
-	
-
-
-
-
