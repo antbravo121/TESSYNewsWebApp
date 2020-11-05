@@ -2,7 +2,7 @@ from newsapi import NewsApiClient
 from NewsData import NewsData
 from random import shuffle
 
-api = NewsApiClient(api_key='e985b7fef38e4b55b6ad85c686220e82')
+api = NewsApiClient(api_key='78b9d599c4f94f8fa3afb1a5458928d6')
 
 def homepage_headlines():
 	sports_headlines = api.get_top_headlines(category="sports").get("articles")
