@@ -1,6 +1,7 @@
 from newsapi import NewsApiClient
 from NewsData import NewsData
 from random import shuffle
+from collections import Counter
 
 api = NewsApiClient(api_key='78b9d599c4f94f8fa3afb1a5458928d6')
 
@@ -47,6 +48,12 @@ def homepage_headlines():
 	#shuffle list and sort them by date
 	shuffle(headlinesList)
 	headlinesList.sort()
+	
+	#remove repeats
+	c = Counter(headline.title for headline in headlinesList)
+	for indx, headline in enurmate(headlinesList):
+		if c[headline.title] > 1:
+			headlinesList.pop(indx)
 
 	return headlinesList
 
@@ -90,9 +97,15 @@ def search_headlines(userSearch):
 			headline.get("title"), 
 			headline.get("url"), 
 			headline.get("urlToImage")))
-
+	#sort by date
 	shuffle(headlinesList)
 	headlinesList.sort()
+	
+	#remove repeats
+	c = Counter(headline.title for headline in headlinesList)
+	for indx, headline in enurmate(headlinesList):
+		if c[headline.title] > 1:
+			headlinesList.pop(indx)
 
 	return headlinesList
 
@@ -111,8 +124,13 @@ def category_headlines(topic):
 			headline.get("title"), 
 			headline.get("url"), 
 			headline.get("urlToImage")))
-
+	#sort by date
 	headlinesList.sort()
+	#remove repeats
+	c = Counter(headline.title for headline in headlinesList)
+	for indx, headline in enurmate(headlinesList):
+		if c[headline.title] > 1:
+			headlinesList.pop(indx)
 
 	return headlinesList
 
