@@ -51,7 +51,7 @@ def homepage_headlines():
 	
 	#remove repeats
 	c = Counter(headline.title for headline in headlinesList)
-	for indx, headline in enurmate(headlinesList):
+	for indx, headline in enumerate(headlinesList):
 		if c[headline.title] > 1:
 			headlinesList.pop(indx)
 
@@ -103,7 +103,7 @@ def search_headlines(userSearch):
 	
 	#remove repeats
 	c = Counter(headline.title for headline in headlinesList)
-	for indx, headline in enurmate(headlinesList):
+	for indx, headline in enumerate(headlinesList):
 		if c[headline.title] > 1:
 			headlinesList.pop(indx)
 
@@ -128,7 +128,7 @@ def category_headlines(topic):
 	headlinesList.sort()
 	#remove repeats
 	c = Counter(headline.title for headline in headlinesList)
-	for indx, headline in enurmate(headlinesList):
+	for indx, headline in enumerate(headlinesList):
 		if c[headline.title] > 1:
 			headlinesList.pop(indx)
 
